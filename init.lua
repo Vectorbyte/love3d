@@ -12,7 +12,7 @@ end
 function l3d.set_depth_write(arg)
     local arg = (arg == nil) and true or arg
     assert(type(arg) == "boolean", "expected one parameter of type 'boolean'")
-	GL.DepthMask(arg and 1 or 0)
+    GL.DepthMask(arg and 1 or 0)
 end
 
 function l3d.set_depth_test(method)
