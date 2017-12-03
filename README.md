@@ -1,6 +1,7 @@
 # LÖVE3D for LÖVE 0.11.0
 
 Enables the user to control depth testing, depth writing and face culling in LÖVE so they can render 3D objects and scenes.
+This is a very stripped down version that only aims at providing the end user with the most basic, necessary control over LÖVE's GL state so they properly control how 3D meshes are rendered.
 
 # Usage
 
