@@ -1,20 +1,27 @@
-# LÖVE3D
+# LÖVE3D for LÖVE 0.11.0
 
-Extensions to the LÖVE API for 3D rendering - depth testing, depth buffers on canvases, etc. Works on desktop OpenGL and OpenGL ES (tested on Raspberry Pi, should work for Android with some tweaking).
+Enables the user to control depth testing, depth writing and face culling in LÖVE so they can render 3D objects and scenes.
 
-Two ways to use the API are provided. You can either use it as a regular module or tell it to inject itself into love.graphics using `l3d.import(true)`. The latter is more user-friendly, but must be more carefully maintained with love versions (on our end).
+# Usage
 
-While this can be used to make fully 3D games (and, in fact, we have), it's most reasonable to use it to lift art restrictions so you can make 2.5D games (or put 3D elements in otherwise 2D games). This is not intended to compete with the likes of any big 3D engine like Unreal Engine or Unity.
+```lua
+local l3d = require "love3d"
 
-Depends on LÖVE 0.10 and [CPML](https://github.com/excessive/cpml)
+function renderer_initialize()
+  -- Here we enable depth testing and writing
+  l3d.set_depth_state(true)
 
-You can load models using [IQM](https://github.com/excessive/iqm).
+  -- We can use l3d.new_canvas() to create a canvas table that holds both color and depth data
+  -- It can be passed into love.graphics.setCanvas()
+  local canvas = l3d.new_canvas(1920, 1080, { rgba8, depth24 }, 0)
+end
 
-Online documentation can be found [here](http://excessive.github.io/love3d/) or you can generate them yourself using `ldoc -c doc/config.ld -o index .`
+function renderer_draw()
+  -- And with these functions we can enable or disable, or just modify depth testing or depth writing individually
+  l3d.set_depth_write(false)
+  l3d.set_depth_test("greater")
 
-## Usage
-
-Examples can be found here: https://github.com/excessive/love3d-demos
-
-## TODO
-* ~Convince slime to add depth support to love.~ Depth canvases will be supported in love 0.11, and this will get a lot smaller.
+  -- We can also cull faces accordingly. LÖVE uses the default OpenGL face winding (which is CCW)
+  l3d.set_culling("back")
+end
+```
